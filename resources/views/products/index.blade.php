@@ -31,12 +31,15 @@
                     <th scope="row">{{ $product->discount }}</th>
                     <th scope="row">{{ $product->description }}</th>
                     <th scope="row">{{ $product->image }}</th>
-                    <th scope="row">
-                        <form method="post" action="/products/{{$product->id}}">
-                            @csrf
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-danger ">delete</button>
-                        </form>
+                    <th scope="">
+                        <div class="row">
+                            <a class="btn btn-info" type="button" href="{{route('products.edit',$product)}}">edit</a>
+                            <form method="post" action="/products/{{$product->id}}">
+                                @csrf
+                                <input type="hidden" name="_method" value="DELETE">
+                                <a type="submit" class="btn btn-danger col">delete</a>
+                            </form>
+                        </div>
                     </th>
                 </tr>
             @endforeach

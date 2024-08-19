@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditProductRuquest;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -53,15 +54,23 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('products.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditProductRuquest $request, string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->name = request('name');
+        $product->price = request('price');
+        $product->description = request('description');
+        $product->discount = request('discount');
+        $product->image = request('image');
+        $product->save();
+        return redirect('/products');
     }
 
     /**
@@ -69,8 +78,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-         $product = Product::where('id',$id)->first();
-         $product->delete();
-         return redirect('/products');
+//         $product = Product::where('id',$id)->first();
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect('/products');
     }
 }
